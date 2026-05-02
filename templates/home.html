@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Smart Expense Tracker</title>
+
+<link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
+
+<style>
+
+/* BACKGROUND */
+body{
+margin:0;
+font-family:'Segoe UI',sans-serif;
+background:linear-gradient(135deg,#0f172a,#1e293b,#020617);
+color:white;
+}
+
+/* NAVBAR */
+nav{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 60px;
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(10px);
+}
+
+nav h2{
+color:#38bdf8;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+margin-left:20px;
+font-weight:500;
+padding:8px 14px;
+border-radius:6px;
+transition:0.3s;
+}
+
+nav a:hover{
+background:#38bdf8;
+}
+
+/* HERO */
+.hero{
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+height:85vh;
+text-align:center;
+padding:20px;
+}
+
+.hero h1{
+font-size:56px;
+margin-bottom:20px;
+background:linear-gradient(90deg,#38bdf8,#22c55e);
+-webkit-background-clip:text;
+color:transparent;
+}
+
+.hero p{
+font-size:18px;
+max-width:600px;
+color:#cbd5f5;
+}
+
+/* BUTTON */
+.btn{
+background:#38bdf8;
+color:white;
+padding:14px 30px;
+border-radius:30px;
+text-decoration:none;
+margin-top:25px;
+font-weight:bold;
+transition:0.3s;
+}
+
+.btn:hover{
+background:#0ea5e9;
+transform:scale(1.05);
+}
+
+/* FEATURES */
+.features{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+padding:40px;
+}
+
+.feature{
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(10px);
+padding:25px;
+border-radius:15px;
+text-align:center;
+transition:0.3s;
+}
+
+.feature:hover{
+transform:translateY(-5px);
+}
+
+.feature i{
+font-size:30px;
+color:#38bdf8;
+margin-bottom:10px;
+}
+
+.feature h3{
+margin:10px 0;
+}
+
+.feature p{
+color:#cbd5f5;
+font-size:14px;
+}
+
+/* FOOTER */
+.footer{
+text-align:center;
+padding:20px;
+color:#94a3b8;
+font-size:14px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav>
+<h2>💰 SmartExpense</h2>
+
+<div>
+<a href="/login">Login</a>
+<a href="/register">Register</a>
+</div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+
+<h1>Track Your Money Smartly</h1>
+
+<p>
+AI-powered expense tracker to monitor spending, predict future expenses,
+and manage your budget efficiently.
+</p>
+
+<a href="/register" class="btn">🚀 Get Started</a>
+
+</div>
+
+<!-- FEATURES -->
+<div class="features">
+
+<div class="feature">
+<i class="ri-line-chart-line"></i>
+<h3>Smart Prediction</h3>
+<p>Predict your future expenses using AI.</p>
+</div>
+
+<div class="feature">
+<i class="ri-pie-chart-2-line"></i>
+<h3>Visual Analytics</h3>
+<p>Understand your spending with charts.</p>
+</div>
+
+<div class="feature">
+<i class="ri-wallet-3-line"></i>
+<h3>Budget Control</h3>
+<p>Set budgets and track your limits.</p>
+</div>
+
+<div class="feature">
+<i class="ri-file-upload-line"></i>
+<h3>CSV Upload</h3>
+<p>Upload expenses quickly using CSV.</p>
+</div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+© 2026 Smart Expense Tracker | Final Year Project
+</div>
+
+</body>
+</html>

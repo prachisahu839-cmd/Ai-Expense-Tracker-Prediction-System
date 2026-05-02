@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<title>Prediction</title>
+
+<style>
+body{
+background:#0f172a;
+color:white;
+text-align:center;
+font-family:sans-serif;
+}
+
+.box{
+margin-top:50px;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+<h2>📊 Expense Prediction</h2>
+
+{% if prediction %}
+<h3>Next Month Prediction: ₹ {{prediction}}</h3>
+{% else %}
+<h3>⚠ Not enough data to predict</h3>
+{% endif %}
+
+<canvas id="chart" width="400" height="200"></canvas>
+
+<br><br>
+<a href="/dashboard">⬅ Back</a>
+
+</div>
+
+<script>
+
+const months = {{ months | default([]) | tojson }};
+const values = {{ values | default([]) | tojson }};
+
+if(months.length > 0){
+
+new Chart(document.getElementById("chart"),{
+type:"line",
+data:{
+labels:months,
+datasets:[{
+label:"Monthly Expense",
+data:values,
+borderWidth:2
+}]
+}
+});
+
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Login - Expense Tracker</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
+
+body{
+height:100vh;
+display:flex;
+background:linear-gradient(135deg,#3c59db,#7908e9);
+}
+
+/* LEFT SIDE (Branding + Features) */
+.left{
+flex:1;
+color:white;
+display:flex;
+flex-direction:column;
+justify-content:center;
+padding:60px;
+}
+
+.left h1{
+font-size:42px;
+margin-bottom:20px;
+}
+
+.left p{
+font-size:18px;
+margin-bottom:30px;
+opacity:0.9;
+}
+
+.features{
+margin-top:20px;
+}
+
+.features div{
+margin-bottom:15px;
+font-size:16px;
+}
+
+/* RIGHT SIDE (Login Card) */
+.right{
+flex:1;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+.card{
+background:rgba(255,255,255,0.15);
+backdrop-filter:blur(12px);
+padding:40px;
+border-radius:16px;
+width:350px;
+color:white;
+box-shadow:0 8px 30px rgba(0,0,0,0.2);
+}
+
+.card h2{
+margin-bottom:20px;
+text-align:center;
+}
+
+input{
+width:100%;
+padding:12px;
+margin:10px 0;
+border:none;
+border-radius:8px;
+outline:none;
+}
+
+input::placeholder{
+color:#666;
+}
+
+button{
+width:100%;
+padding:12px;
+margin-top:10px;
+background:white;
+color:#667eea;
+border:none;
+border-radius:8px;
+font-size:16px;
+font-weight:bold;
+cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+background:#f1f1f1;
+}
+
+.link{
+margin-top:15px;
+text-align:center;
+}
+
+.link a{
+color:white;
+text-decoration:underline;
+}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+.left{
+display:none;
+}
+.right{
+flex:1;
+}
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- LEFT SIDE -->
+<div class="left">
+<h1>Smart Expense Tracker</h1>
+<p>Track. Analyze. Predict your expenses effortlessly.</p>
+
+<div class="features">
+<div>✔ AI-based expense prediction</div>
+<div>✔ Automatic category detection</div>
+<div>✔ Beautiful analytics dashboard</div>
+<div>✔ Secure & fast performance</div>
+</div>
+</div>
+
+<!-- RIGHT SIDE -->
+<div class="right">
+<div class="card">
+
+<h2>Welcome Back</h2>
+
+<form action="/login" method="POST">
+
+<input type="text" name="username" placeholder="Username" required>
+
+<input type="password" name="password" placeholder="Password" required>
+
+<button type="submit">Login</button>
+
+</form>
+
+<div class="link">
+<p>Don't have an account? <a href="/register">Register</a></p>
+</div>
+
+</div>
+</div>
+
+</body>
+</html>

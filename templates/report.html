@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Expense Report</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+body{
+    font-family:Arial;
+    background:#0f172a;
+    color:white;
+    text-align:center;
+}
+
+.container{
+    padding:30px;
+}
+
+canvas{
+    background:white;
+    border-radius:10px;
+    padding:10px;
+}
+
+a{
+    display:inline-block;
+    margin-top:20px;
+    padding:10px 20px;
+    background:#38bdf8;
+    color:white;
+    text-decoration:none;
+    border-radius:6px;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>📊 Expense Report</h1>
+
+<canvas id="reportChart"></canvas>
+
+<br>
+
+<a href="/dashboard">⬅ Back to Dashboard</a>
+
+</div>
+
+<script>
+
+const categories = {{ categories | tojson | safe }};
+const amounts = {{ amounts | tojson | safe }};
+
+new Chart(document.getElementById("reportChart"), {
+    type: "bar",
+    data: {
+        labels: categories,
+        datasets: [{
+            label: "Spending by Category",
+            data: amounts
+        }]
+    }
+});
+
+</script>
+
+</body>
+</html>

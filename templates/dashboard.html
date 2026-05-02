@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<title>Expense Dashboard</title>
+
+<style>
+
+/* BACKGROUND */
+body{
+margin:0;
+font-family:'Segoe UI',sans-serif;
+background:linear-gradient(135deg,#0f172a,#1e293b,#020617);
+color:white;
+}
+
+/* LIGHT MODE */
+body.light{
+background:#f8fafc;
+color:#111;
+}
+
+/* NAVBAR */
+.navbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:15px 30px;
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(10px);
+border-bottom:1px solid rgba(255,255,255,0.1);
+}
+
+body.light .navbar{
+background:white;
+}
+
+/* LOGO */
+.logo{
+font-size:22px;
+font-weight:bold;
+color:#38bdf8;
+}
+
+/* NAV BUTTONS */
+.nav-buttons a{
+margin-left:10px;
+padding:8px 14px;
+border-radius:8px;
+text-decoration:none;
+color:white;
+font-size:14px;
+display:inline-flex;
+align-items:center;
+gap:5px;
+transition:0.3s;
+}
+
+.nav-buttons a:hover{
+transform:scale(1.05);
+}
+
+.add{ background:#0ea5e9; }
+.predict{ background:#f59e0b; }
+.report{ background:#6366f1; }
+.pdf{ background:#10b981; }
+.logout{ background:#ef4444; }
+.theme-btn{ background:#22c55e; cursor:pointer; }
+
+/* CONTAINER */
+.container{
+padding:30px;
+max-width:1200px;
+margin:auto;
+}
+
+/* ALERT */
+.alert-box{
+margin-bottom:15px;
+padding:15px;
+border-radius:10px;
+text-align:center;
+background:linear-gradient(90deg,#1e293b,#334155);
+}
+
+/* INSIGHT BOX */
+.box{
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(10px);
+padding:20px;
+border-radius:15px;
+margin-bottom:25px;
+}
+
+/* CARDS */
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+margin-bottom:30px;
+}
+
+.card{
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(10px);
+padding:20px;
+border-radius:15px;
+text-align:center;
+transition:0.3s;
+}
+
+.card:hover{
+transform:translateY(-6px);
+box-shadow:0 10px 30px rgba(0,0,0,0.4);
+}
+
+.card h3{
+margin:0;
+color:#94a3b8;
+}
+
+.card p{
+font-size:24px;
+margin-top:10px;
+}
+
+/* TABLE */
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+border-radius:10px;
+overflow:hidden;
+}
+
+th{
+background:#1e293b;
+padding:12px;
+}
+
+td{
+padding:12px;
+}
+
+tr:nth-child(even){
+background:rgba(255,255,255,0.05);
+}
+
+.delete{
+background:#ef4444;
+padding:6px 10px;
+border-radius:6px;
+color:white;
+text-decoration:none;
+}
+
+/* CHART */
+.chart-box{
+margin-top:30px;
+background:rgba(255,255,255,0.05);
+padding:20px;
+border-radius:15px;
+}
+
+/* BUTTON */
+button{
+margin-top:10px;
+padding:10px 20px;
+border:none;
+background:#38bdf8;
+color:white;
+border-radius:6px;
+cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+background:#0ea5e9;
+}
+
+/* INPUT */
+input, select{
+padding:8px;
+margin:8px;
+border-radius:6px;
+border:none;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+<div class="logo">💰 Smart Expense Tracker</div>
+
+<div class="nav-buttons">
+<a class="add" href="/add"><i class="ri-add-line"></i> Add</a>
+<a class="predict" href="/predict"><i class="ri-line-chart-line"></i> Predict</a>
+<a class="report" href="/report"><i class="ri-bar-chart-line"></i> Report</a>
+<a class="pdf" href="/download_report"><i class="ri-file-download-line"></i> PDF</a>
+<a class="logout" href="/logout"><i class="ri-logout-box-line"></i> Logout</a>
+<a class="theme-btn" onclick="toggleTheme()">🌙/☀</a>
+</div>
+</div>
+
+<div class="container">
+
+<!-- ALERT -->
+{% if prediction %}
+<div class="alert-box">
+📊 Next Month Prediction: ₹ {{prediction}}
+</div>
+{% endif %}
+
+{% if budget > 0 and total > budget %}
+<div class="alert-box" style="background:#ef4444;">
+🚨 Budget exceeded!
+</div>
+{% endif %}
+
+<!-- INSIGHTS -->
+<div class="box">
+<h3>💡 Smart Insights</h3>
+{% for i in insights %}
+<p>{{i}}</p>
+{% endfor %}
+</div>
+
+<!-- CARDS -->
+<div class="cards">
+<div class="card">
+<h3>💰 Total</h3>
+<p>₹ {{total}}</p>
+</div>
+
+<div class="card">
+<h3>💳 Budget</h3>
+<p>₹ {{budget}}</p>
+</div>
+
+<div class="card">
+<h3>🟢 Remaining</h3>
+<p>₹ {{budget - total if budget > total else 0}}</p>
+</div>
+
+<div class="card">
+<h3>📊 Transactions</h3>
+<p>{{expenses|length}}</p>
+</div>
+</div>
+
+<!-- FILTER -->
+<div class="box">
+<h3>Filter Expenses</h3>
+
+<form method="GET" action="/dashboard">
+<input type="month" name="month">
+<select name="category">
+<option value="">All</option>
+<option>Food</option>
+<option>Travel</option>
+<option>Shopping</option>
+<option>Bills</option>
+</select>
+<br>
+<button>Apply</button>
+</form>
+</div>
+
+<!-- BUDGET -->
+<div class="box">
+<h3>Set Budget</h3>
+
+<form action="/set_budget" method="POST">
+<input type="number" name="budget" placeholder="Enter amount" required>
+<br>
+<button>Save</button>
+</form>
+
+<p>Current Budget: ₹ {{budget}}</p>
+</div>
+
+<!-- CSV -->
+<div class="box">
+<h3>Upload CSV</h3>
+
+<form action="/upload" method="POST" enctype="multipart/form-data">
+<input type="file" name="file" required>
+<br>
+<button>Upload</button>
+</form>
+</div>
+
+<!-- TABLE -->
+<h2>Expenses</h2>
+
+<table>
+<tr>
+<th>Amount</th>
+<th>Category</th>
+<th>Description</th>
+<th>Date</th>
+<th>Delete</th>
+</tr>
+
+{% for e in expenses %}
+<tr>
+<td>₹ {{e.amount}}</td>
+<td>{{e.category}}</td>
+<td>{{e.description}}</td>
+<td>{{e.date}}</td>
+<td><a class="delete" href="/delete/{{e.id}}">Delete</a></td>
+</tr>
+{% endfor %}
+</table>
+
+<!-- CHART -->
+<div class="chart-box">
+<h2>Expense Distribution</h2>
+<canvas id="chart"></canvas>
+</div>
+
+</div>
+
+<script>
+
+function toggleTheme(){
+document.body.classList.toggle("light");
+}
+
+const categories = {{ categories | default([]) | tojson }};
+const amounts = {{ amounts | default([]) | tojson }};
+
+if(categories.length > 0){
+new Chart(document.getElementById("chart"),{
+type:"doughnut",
+data:{
+labels:categories,
+datasets:[{
+data:amounts
+}]
+}
+});
+}
+
+</script>
+
+</body>
+</html>

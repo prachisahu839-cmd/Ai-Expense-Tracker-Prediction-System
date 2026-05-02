@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Monthly Report</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+body{
+font-family:sans-serif;
+background:#0f172a;
+color:white;
+text-align:center;
+}
+
+.container{
+padding:30px;
+}
+
+.card{
+background:#1e293b;
+padding:20px;
+border-radius:10px;
+margin-bottom:20px;
+}
+
+button{
+padding:10px 20px;
+background:#22c55e;
+border:none;
+color:white;
+border-radius:6px;
+cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>📊 Monthly Report</h1>
+
+<div class="card">
+<h2>Total Spending</h2>
+<p>₹ {{total}}</p>
+</div>
+
+<div class="card">
+<h2>Category Breakdown</h2>
+<canvas id="chart"></canvas>
+</div>
+
+<br>
+<a href="/download"><button>Download CSV</button></a>
+
+</div>
+
+<script>
+const categories = {{categories | tojson | safe}};
+const amounts = {{amounts | tojson | safe}};
+
+new Chart(document.getElementById("chart"),{
+type:"bar",
+data:{
+labels:categories,
+datasets:[{
+data:amounts
+}]
+}
+});
+</script>
+
+</body>
+</html>
